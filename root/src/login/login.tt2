@@ -1,0 +1,46 @@
+[% META title = 'Welcome to MyApp: Please Log In' %]
+<div>
+    [% FOR field IN login_form.error_fields %]
+        [% FOR error IN field.errors %]
+            <p><span style="color: red;">[% field.label _ ': ' _ error %]</span></p>
+        [% END %]
+    [% END %]
+</div>
+ 
+<div>
+    <form id="login_form" method="post" action="[% c.req.uri %]">
+        <fieldset style="border: 0;">
+            <table>
+                <tr>
+                    <td><label class="label" for="username">Username:</label></td>
+                    <td><input type="text" name="username" value="" /></td>
+                </tr>
+                <tr>
+                    <td><label class="label" for="password">Password:</label></td>
+                    <td><input type="password" name="password" value="" /></td>
+                </tr>
+                <tr><td><input type="submit" name="submit" value="Login" /></td></tr>
+            </table>
+        </fieldset>
+    </form>
+</div>
+
+<p>
+[%
+   # This code illustrates how certain parts of the TT
+   # template will only be shown to users who have logged in
+%]
+[% IF c.user_exists %]
+    Please Note: You are already logged in as '[% c.user.username %]'.
+    You can <a href="[% c.uri_for('/logout') %]">logout</a> here.
+[% ELSE %]
+    You need to log in to use this application.
+[% END %]
+[%#
+   Note that this whole block is a comment because the "#" appears
+   immediate after the "[%" (with no spaces in between).  Although it
+   can be a handy way to temporarily "comment out" a whole block of
+   TT code, it's probably a little too subtle for use in "normal"
+   comments.
+%]
+</p>
